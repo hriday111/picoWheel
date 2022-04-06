@@ -3,24 +3,23 @@ import board
 import usb_hid
 from adafruit_hid.gamepad import Gamepad
 gp = Gamepad(usb_hid.devices)
+
 from analogio import AnalogIn
-wheel = AnalogIn(board.GP28)
+wheel = AnalogIn(board.GP28) #where wheel [pt is attached
+
 import neopixel
 pixel_pin = board.GP18
 num_pixels = 6
 pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=10, auto_write=False)
+
 import digitalio
-green = digitalio.DigitalInOut(board.GP11)
-green.direction = digitalio.Direction.OUTPUT
-red = digitalio.DigitalInOut(board.GP10)
-red.direction = digitalio.Direction.OUTPUT
-yel = digitalio.DigitalInOut(board.GP9)
-yel.direction = digitalio.Direction.OUTPUT
 
 
 
 button_pins = (board.GP17, board.GP16,board.GP14, board.GP12, board.GP15, board.GP8, board.GP7, board.GP2)
-gamepad_buttons = (10, 9, 8, 7, 6, 4, 3, 2)
+gamepad_buttons = (10, 9, 8, 7, 6, 4, 3, 2) 
+#I don't know what buttons this maps to on a gamepad, but I use a tool called x350ce 
+#that lets you map any gamepad to a virtual xbox360 controller.
 buttons = [digitalio.DigitalInOut(pin) for pin in button_pins]
 
 
@@ -36,22 +35,21 @@ def constrain(x, m, M):
         return x
 
 def xM(pin, iM, iMax, oM, oMax):
-    x= (pin.value * 255) // 65536
-    return constrain((x - iM) * (oMax - oM) // (iMax - iM) + oM, oM, oMax)
-    #return x
-while False:
-    rollVal=xM(roll, 3, 250, -127, 127)
-    print(rollVal)
-    time.sleep(0.1)
+    x= (pin.value * 255) // 65536 #the analong input on pico circuit python is 16 bit, which is very very precise. So we first convert it to 8 bit.
+    return constrain((x - iM) * (oMax - oM) // (iMax - iM) + oM, oM, oMax) 
+    # now this functions takes x as input, then maps that x in a specific range to an output range.
+    # we didn;t need to first convert it to 8 bit but it helps in calibrating
+    #return x ##this comment is to just debug
 while True:
     
     wheelVal=xM(wheel, 3, 250, -127, 127)
+    #first go to the function xM() and comment the return constrain.... and un-comment return x. then put your wheel to the right most or as right as you want
+    #it to go and replace that value with 3. same with left most. 
+    
+    # this is completely your preference of how much understeer or oversteer you want. 
     gp.move_joysticks(x=wheelVal, y=0)
+    # we move only x joystic.
     
-    
-    
-    #print(wheelVal)
-    #time.sleep(0.1)
     for i, button in enumerate(buttons):
         
         gamepad_button_num = gamepad_buttons[i]
