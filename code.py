@@ -6,7 +6,7 @@ import digitalio
 from analogio import AnalogIn
 wheel = AnalogIn(board.GP28) #where wheel [pt is attached
 offset= 0 #offset will be set when the wheel goes too far too left or right
-debug=False
+debug=True
 wheelMin=0
 wheelMax=1024
 wheelOffsetMin=0
