@@ -55,19 +55,19 @@ while True:
         print(wheelVal)
         time.sleep(0.1)
 
-        # DEBUG TEST 1
+        # CALIBRATION 1
         #First put your wheel to left most position and give that value to wheelMin on the top of the code.
         #Then put your wheel to right position and give that value to wheelMax on the top of the code.
 
 
         
-        #DEBUG TEST 2
+        #CALIBRATION 2
         #First Press the accelator
         #Then put your wheel to left most position and give that value to wheelOffsetMin on the top of the code.
         #Then put your wheel to right position and give that value to wheelOffsetMax on the top of the code.
     
-        ## DEBUG TEST 2 is not necessary. You can set the offsetMin and offsetMax to the same value as from DEBUG TEST 1. 
-        ## But if you do notice that the wheel moves to right in the game when you press accelator brake then perform DEBUG TEST 2
+        ## CALIBRATION 2 is not necessary. You can set the offsetMin and offsetMax to the same value as from CALIBRATION 1. 
+        ## But if you do notice that the wheel moves to right in the game when you press accelator brake then perform CALIBRATION 2
 
     
     for i, button in enumerate(buttons):
@@ -76,11 +76,11 @@ while True:
         if button.value:
             gp.release_buttons(gamepad_button_num)
             if i==1:
-                wheelMin=0 # the value you got when you performed DEBUG TEST 1
-                wheelMax=1024 # the value you got when you performed DEBUG TEST 1
+                wheelMin=0 # the value you got when you performed CALIBRATION 1
+                wheelMax=1024 # the value you got when you performed CALIBRATION 1
             elif i==0:
-                wheelMin=0 # the value you got when you performed DEBUG TEST 1
-                wheelMax=1024 # the value you got when you performed DEBUG TEST 1
+                wheelMin=0 # the value you got when you performed CALIBRATION 1
+                wheelMax=1024 # the value you got when you performed CALIBRATION 1
         else:
             gp.press_buttons(gamepad_button_num)
             if i==1:
